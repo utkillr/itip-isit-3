@@ -1,0 +1,78 @@
+Несимметричное шифрование.
+	Шифрование, где ключ шифрации не равен ключу дешифрации (K!=K*)
+	1976 год.
+	A------->B
+		|
+		E		E прослушивает A<->B
+
+	N=17
+	a=7
+
+	1 < a < N
+	A = a^(alpha) mod N
+	B = a^(beta) mod N
+	K=A^(beta) = B^(alpha) = a(alpha*beta) mod N
+
+	a^(N-1) = 1 mod N
+	A = 7^9 mod 17
+	7^2 = 49 = 15 mod 17
+	7^4 = 15^2 = 4 mod 17
+	7^8 = 4^2 = 16 mod 17
+	16 * 7 mod 17 = 10
+	Значит, A = 10
+
+	7^11 = 7^8 * 7^2 * 7 -> 14 mod 17
+	Тогда A = 10 mod 17
+	B = 14 mod 17
+
+Методы несимметричного шифрования:
+1) Метод упаковки рюкзака
+	p_i > summ(j = 1 to i-1)(p_j)
+
+	p_1
+	p_2 > p_1
+	....
+	P_n>p_(n-1)+p_(n-2)+...+p_1
+	N > p_n + p_(n-1) + ... + p_1
+	(c, N) = 1 mod N
+	b*c=1 mod N
+
+	r_1=c*p_1 mod N
+	r_2=c*p_2 mod N
+	...
+	r_n=c*p_n mod N
+
+	PublicKey (PK) = {r_1 .. r_n}
+	SecretKet (SK) = {b}
+
+	Берем набор бит по n:
+	m = набор n бит
+	e = summ((m_i*r_i) mod N)
+
+
+	v_0 = 1
+	v_1 = 0
+
+	(c, N) = 1
+
+	N = c*q+r_1
+	v1 = q_1*v_0+v_(-1)
+	c = r_1*q_2 + r_2
+	v_2 = q_2*v_1+v_0
+	r_1 = r_2*q_3+r_3
+	...
+	r_i = r_i*q_(i+1) + r_(i+1)*v_(i+1) = q_(i+1)*v_i + v_(i+1)
+	b = (-1)^(i+1) * v^(i+1) mod N
+
+2) RSA
+3) ELGmal
+	N_(k-1)
+	q = 1 mod N
+	q < b < N
+	c = q^b mod N
+	PK = { N, q, c}
+	SK = {b}
+
+	f = q^r mod N
+	lambda = c^r mod N
+	!!!r - random
