@@ -1,0 +1,121 @@
+Элементарные структуры данных
+	Стек
+	Last In First Out
+		Реализация на массиве:
+			S [8 10 5 7 9 - - -]
+			top - указатель на верхушку. Ничего не трем, забиваем на лишнее.
+			Методы:
+				isEmpty()			O(1)
+					return top ==0;
+				
+				Push(x)				O(1)
+					top++;
+					S[top] = x;
+				
+				Pop()				O(1)
+					if isEmpty()
+						Error
+					else
+						return S[top--];
+
+	Очередь
+	First In First Out
+		Реализация на массиве:
+			S [- - - 8 9 5 7 -]
+			head - указатель на начало
+			tail - указатель на следующий за последним
+			Если конец дальше конца массива - переносим его в начало
+			Методы:
+				isEmpty()					O(1)
+					return head == tail;
+				
+				isFull()					O(1)
+					return head == tail+1;
+				
+				Enqueue(x)					O(1)
+					if isFull()
+						Error
+					else
+						s[tail] = x
+						tail = (tail + 1) % n	//n - длина массива
+				
+				Dequeue()					O(1)
+					if isEmpty()
+						Error
+					else
+						result = s[head]
+						head = (head + 1) % n
+
+	Связанные списки
+		Односвязный
+			head -> [key|next] -> [key|next] -> ... -> nil
+		Двусвязный
+			head|nil <-> [prev|key|next] <-> [prev|key|next] <-> ... -> nil
+		Циклический
+			/[prev|key|next] <-> [prev|key|next] <-> ... <-> [prev|key|next] \
+			\________________________________________________________________/
+
+		Реализация двусвязного списка:
+			Методы:
+				isEmpty()					O(1)
+					return head == nil
+				
+				Search(k)					O(n)
+					x = head
+					while (x != nil AND x.key != k)
+						x = x.next
+					return x
+
+				Insert(x)					O(1)
+					x.next = head
+					x.prev = nil
+					if head != nil
+						head.prev = x
+					head = x
+
+				Delete(x)					O(1)
+					if x.prev != nil
+						x.prev.next = x.next
+					else
+						head = x.next
+					if x.next != nil
+						x.next.prev = x.prev
+
+				Delete(k)					O(n)
+					x = Search(k)
+					Delete(x)
+
+	Связный список с ограничением:
+				Insert(x)
+					x.next = Nil.next
+					Nil.next = x
+					Nil.next.prev = x
+					x.prev = Nil
+
+
+Очередь с приоритетами
+	Insert(x)
+	Minimum()
+	Extract_Min()
+	Decrease_Key(x, k)
+
+	Пусть, очередь с приоритетами хранится в массиве A (куча)
+	Куча будет неубывающей, в корне самый маленький элемент
+	HeapMinimum()					O(1)
+		return A[1]
+
+	HeapExtractMinimum()			O(lg n)
+		if heapsize<1
+			Error
+		min = A[1]
+		A[1] = A[heapsize]
+		heapsize--
+		HeapifyMin(1)
+		return min
+
+	HeapDecreaseKey(i, k)
+		if k>A[i]
+			Error
+		A[i] = k
+		while (i > 1 AND A[parent(i)] > A[i])
+			swap(A[parent(i)] A[i])

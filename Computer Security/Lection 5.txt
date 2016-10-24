@@ -1,0 +1,37 @@
+Интегральная формула Лагранжа
+
+	Secret -> S1, ... Sn
+
+	secret = tg(a)
+	y=ax+b (2 dots)
+	y=ax^2+bx+c (3 dots)
+	Y = a_(t-1)x^(t-1)+...+a_1*x+S (s = secret)
+	a_i < N; S < N
+	Y(ID_i) = S_i
+	Y(x) = SUMM(j=1 to t) (MULT(i=1 to t exclude i=j) (S_j*Lambda_j)) mod N
+	MULT(i=1 to t exclude i=j) (ID_j-ID_i)*S_j*Lambda_j = S_j mod N -> (ID_j-ID_i)*Lambda_j = 1
+
+	Y(0) = SUMM(j=1 to t)((-1)^t*MULT(i=1 to j exclude i=j)(ID_i*Lambda_j*S_j)) mod N
+	Lambda_j*MULT(i=1 to t exclude i=j)(ID_i) == 1 mod N
+____________
+RSA: p, q, N=pq, c, phi(N)=(p-1)(q-1)
+c*d = 1 mod phi(N)
+e = m^c mod N
+m = e^d mod N
+S = m^d mod N
+____________
+	Чтобы знать Lambda_j, необходимо знать функцию Эйлера: Lambda_j: MULT(i=1 to t exclude i=j) (ID_i) == 1 mod phi(N)
+
+Слепая подпись Чаума (Chaum)
+
+	RSA: c, d; m -> hash(m) = h
+	S = h^d mod N
+	r - salt (random)
+	R = r^c mod N
+	~h = h*R mod N
+	~s = ~h^d mod N
+	~s = h^d * R^cd mod N
+	~s = s*r mod N
+	s = ~s*r^(-1) mod N
+
+	я пытался	
